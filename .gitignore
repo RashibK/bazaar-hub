@@ -7,4 +7,4 @@ backend/db.sqlite3
 backend/backend/__pycache__
 
 backend/users/__pycache__
-backend/users/migrations/__pycache__
+backend/users/migrations/
