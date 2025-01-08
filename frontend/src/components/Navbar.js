@@ -1,11 +1,17 @@
-import { Link } from "react-router-dom"
+import { Link, Navigate } from "react-router-dom"
+import { useContext } from "react"
+import { AuthContext } from "../context/authContext";
 
 export const Navbar = () => {
+
+  const { user, userLogout } = useContext(AuthContext);
+
   return (
     <div>
         <Link to='/'>Home</Link>
-        <Link to='/register'>Register</Link>
-        <Link to='/login'>Login</Link>
+        {!user && <Link to='/register'>Register</Link>}
+        {!user && <Link to='/login'>Login</Link>}
+        {user && <p style={{cursor: 'pointer'}} onClick={() => {userLogout()}}> Logout </p>}
     </div>
   )
 }
