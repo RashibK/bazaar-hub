@@ -1,5 +1,6 @@
-import { createContext } from "react"
+import { createContext, useContext, useState } from "react"
 import { instance } from "../utils/instanceAxios";
+import { jwtDecode } from "jwt-decode";
 
 export const AuthContext = createContext();
 
@@ -7,44 +8,24 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
 
-
-    // let userLogin = async (event) => {
-
-    //     const response = await instance.post('/users/api/token/', {
-    //     "email": event.target.email.value,
-    //     "password": event.target.email.password
-        
-    //     })
-    
-    //     if (response.status ===  200) {
-    //         console.log('Hey it worked')
-    
-    //     }
-    
-    // }
-    
+    const [user, setUser] = useState(localStorage.getItem('authTokens') ? jwtDecode(JSON.parse(localStorage.getItem('authTokens')).access) : null);
+    const [authTokens, setAuthTokens] = useState( localStorage.getItem('authTokens') ? JSON.parse((localStorage.getItem('authTokens'))) : null);
 
     let userLogin = async (event) => {
 
-        const response = await fetch('http://127.0.0.1:8000/users/api/token/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: event.target.email.value,
-                password: event.target.password.value,
-            }),
-        });
+        const response = await instance.post('/users/api/token/', {
+        "email": event.target.email.value,
+        "password": event.target.password.value
+        
+        })
     
-        if (!response.ok) {
-            console.error('Login failed:', response.statusText);
-            return;
+        if (response.status ===  200) {
+            localStorage.setItem('authTokens', JSON.stringify(response.data))
+            setUser(jwtDecode(response.data.access))
+            setAuthTokens(response.data)    
         }
-    
-        const data = await response.json();
-        console.log('Login successful:', data);
-    };
+
+    }
     
     let userRegister = async (event) => {
     
@@ -77,10 +58,14 @@ export const AuthProvider = ({children}) => {
     
     }
     
+
+
     let contextValues = {
         userLogin: userLogin,
         userRegister: userRegister,
-        getTokens: getTokens
+        getTokens: getTokens,
+        authTokens: authTokens,
+        user: user
     }
 
 
