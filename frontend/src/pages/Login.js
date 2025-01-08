@@ -1,7 +1,18 @@
-const Login = () => {
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
+import { instance } from "../utils/instanceAxios";
 
-    const onSubmit = (event) => {
+const Login = () => {
+    const  { name, userLogin } = useContext(AuthContext);
+
+
+    const onSubmit = async (event) => {
         event.preventDefault();
+        userLogin(event);
+        
+        // const response = await instance.post('/users/', {"name" : "Rashib"});
+        // console.log(response.data);
+
     }
     return (
 
@@ -11,6 +22,7 @@ const Login = () => {
     <button> Login </button>
 </form>
 <p>New here? <a href="/register">Click here</a> to register</p>
+
 </div>
   )
 }
