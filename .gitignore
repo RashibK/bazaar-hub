@@ -10,4 +10,11 @@ backend/users/__pycache__
 backend/users/migrations/
 backend/.env
 
+
+backend/carts/__pycache__
+backend/carts/migrations/
+
+backend/products/__pycache__
+backend/products/migrations/
+
 #fronte
