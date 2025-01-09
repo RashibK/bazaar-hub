@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { instance } from "../utils/instanceAxios";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
@@ -11,8 +11,9 @@ export const AuthProvider = ({children}) => {
 
     const navigate = useNavigate();
 
-    const [user, setUser] = useState(localStorage.getItem('authTokens') ? jwtDecode(JSON.parse(localStorage.getItem('authTokens')).access) : null);
+    const [user, setUser] = useState(localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null);
     const [authTokens, setAuthTokens] = useState( localStorage.getItem('authTokens') ? JSON.parse((localStorage.getItem('authTokens'))) : null);
+    const [loading, setLoading] = useState(true);
 
     let userLogin = async (event) => {
 
@@ -26,7 +27,8 @@ export const AuthProvider = ({children}) => {
         if (response.status ===  200) {
             localStorage.setItem('authTokens', JSON.stringify(response.data))
             setUser(jwtDecode(response.data.access))
-            setAuthTokens(response.data)    
+            setAuthTokens(response.data) 
+            navigate('/')   
         }
 
     } catch (err) {
@@ -55,19 +57,7 @@ export const AuthProvider = ({children}) => {
         // console.log(response.data);
     
     }
-    
-    const getTokens = async (event) => {
-    
-        const response = await instance.post('/users/api/token/', {
-            
-            "email": event.target.email.value,
-            "password": event.target.password.value,
-        })
-        console.log(response.data);
-        // console.log(response.data);
-    
-    }
-    
+
     let userLogout =  () => {
         setUser(null);
         setAuthTokens(null);
@@ -80,16 +70,23 @@ export const AuthProvider = ({children}) => {
         user: user,
         userLogin: userLogin,
         userRegister: userRegister,
-        getTokens: getTokens,
-        userLogout: userLogout
-
-
+        userLogout: userLogout,
+        setAuthTokens: setAuthTokens,
+        setUser: setUser,
     }
 
+    
+    useEffect(() => {
+        if (authTokens) {
+            setUser(jwtDecode(authTokens.access))
+        }
+        setLoading(false);
+
+    }, [authTokens, loading])
 
     return (
     <AuthContext.Provider value={contextValues}>
-        {children}
+        {loading ? null : children}
     </AuthContext.Provider>
     )
 }

@@ -3,7 +3,7 @@ import { AuthContext } from "../context/authContext";
 import { instance } from "../utils/instanceAxios";
 
 const Login = () => {
-    const  { name, userLogin } = useContext(AuthContext);
+    const  { userLogin } = useContext(AuthContext);
 
 
     const onSubmit = async (event) => {

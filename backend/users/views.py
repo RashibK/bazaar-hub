@@ -6,7 +6,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import MyTokenObtainPairSerializer
+from .serializers import MyTokenObtainPairSerializer, UserSerializer
+from .models import User
 
 # Create your views here.
 # @csrf_exempt
@@ -32,9 +33,13 @@ def checkout(request):
     return Response("Hey!!", status=status.HTTP_200_OK)
 
 @api_view(['GET', 'POST'])
+@permission_classes([IsAuthenticated])
 def home(request):
     if request.method == 'GET':
-         return Response('Hey', status=status.HTTP_200_OK)
+         user = User.objects.all()
+         serializer = UserSerializer(user, many=True)
+
+         return Response(serializer.data, status=status.HTTP_200_OK)
     
     if request.method == 'POST':
         return Response('Hey, poster', status=status.HTTP_200_OK)
