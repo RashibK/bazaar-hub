@@ -33,11 +33,15 @@ function useAxios() {
             "refresh": authTokens.refresh
         })
 
-        localStorage.setItem('authTokens', JSON.stringify(response.data))
-        setAuthTokens(response.data);
-        setUser(jwtDecode(response.data.acess));
+        if (response.status === 200) {
+            localStorage.setItem('authTokens', JSON.stringify(response.data))
+            setAuthTokens(response.data);
+            setUser(jwtDecode(response.data.access));
+    
+            request.headers.Authorization = `Bearer ${response.data.access}`
+    
+        }
 
-        request.headers.Authorization = `Bearer ${response.data.access}`
 
         return request
       })
