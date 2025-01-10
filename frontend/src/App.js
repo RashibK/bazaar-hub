@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import HomePage from './pages/HomePage';
 import PrivateRoutes from './utils/PrivateRoute';
 import { AuthProvider } from './context/authContext';
+import AddProduct from './pages/AddProduct';
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/products/add' element={<AddProduct />} />
       </Routes>
       </AuthProvider>
      </Router>
