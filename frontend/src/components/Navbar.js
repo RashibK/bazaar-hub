@@ -18,6 +18,7 @@ export const Navbar = () => {
 
         {user && <Link to='/products/add'>Add Product</Link>}
         {user && <Link to='/users/profile'>Your Profile</Link> }
+        {user && <Link to='/users/cart'>Your Cart</Link> }
     </div>
   )
 }

@@ -20,8 +20,8 @@ def register(request):
         return Response(serializer.error_messages, status=status.HTTP_400_BAD_REQUEST)
     
 
-class MyTokenObtainPairView(TokenObtainPairView):
-    serializer_class = MyTokenObtainPairSerializer  
+# class MyTokenObtainPairView(TokenObtainPairView):
+#     serializer_class = MyTokenObtainPairSerializer  
 
 # random testing
 @api_view(['GET'])

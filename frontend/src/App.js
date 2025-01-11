@@ -11,6 +11,7 @@ import FilteredPage from './components/FilteredPage';
 import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import UserProfile from './pages/UserProfile';
+import Cart from './pages/Cart';
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
             <Route path='/products/add' element={<AddProduct />} />
             <Route path='/users/profile' element={<UserProfile />} />
-          
+            <Route path='/users/cart' element={<Cart />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
