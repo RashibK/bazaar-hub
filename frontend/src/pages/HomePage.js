@@ -40,6 +40,7 @@ function HomePage() {
       {filteredData && filteredData.map((product, index) => {
         return <><p id={index}>{product.name} at {((product.price) / 100).toFixed(2)}</p>
         <img src={`http://localhost:8000/${product.image}`} style={{width: 150, height: 150}}></img>
+        <img src={`http://localhost:8000/media/ratings/rating-${product.rating * 10}.png`} ></img><p>{product.rating_number}</p>
         <p>{product.category_name}</p></>
       })}
     </div>

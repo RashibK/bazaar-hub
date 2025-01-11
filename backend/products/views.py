@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .serializers import ProductSerializer
+from .serializers import ProductSerializer, ProductSerializerSave
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
@@ -12,8 +12,7 @@ from .models import Product
 @parser_classes([MultiPartParser, FormParser])
 def add_product(request):
     if request.method == 'POST':
-        print(request.data)
-        serializer = ProductSerializer(data = request.data)
+        serializer = ProductSerializerSave(data = request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

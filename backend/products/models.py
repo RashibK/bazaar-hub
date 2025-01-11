@@ -27,6 +27,8 @@ class Product(models.Model):
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     name = models.CharField(max_length=255)
     price = models.IntegerField()
+    rating = models.FloatField(blank=True, default=2.5)
+    rating_number = models.IntegerField(blank=True, default=50)
 
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default=1)
     
