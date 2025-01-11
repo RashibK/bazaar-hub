@@ -8,6 +8,9 @@ class Cart(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     product = models.ManyToManyField(Product, blank=True)
 
+    def __str__(self):
+        return self.user.full_name
+
 
 @receiver(post_save, sender=User)   
 def create_cart(sender, instance, created, **kwargs):
