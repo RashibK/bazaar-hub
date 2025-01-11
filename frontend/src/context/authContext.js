@@ -14,6 +14,7 @@ export const AuthProvider = ({children}) => {
     const [user, setUser] = useState(localStorage.getItem('authTokens') ? jwtDecode(localStorage.getItem('authTokens')) : null);
     const [authTokens, setAuthTokens] = useState( localStorage.getItem('authTokens') ? JSON.parse((localStorage.getItem('authTokens'))) : null);
     const [loading, setLoading] = useState(true);
+    const [search, setSearch] = useState('');
 
     let userLogin = async (event) => {
 
@@ -65,14 +66,29 @@ export const AuthProvider = ({children}) => {
         navigate('/login');
     }
 
+
+    let fetchProducts = async () => {
+
+        const response = await instance.get('/products/list');
+        
+        if (response.status === 200) {
+            return response.data;
+        }
+        }  
+    
+
     let contextValues = {
         authTokens: authTokens,
         user: user,
+        search: search,
         userLogin: userLogin,
         userRegister: userRegister,
         userLogout: userLogout,
         setAuthTokens: setAuthTokens,
         setUser: setUser,
+        setSearch: setSearch,
+        fetchProducts: fetchProducts,
+  
     }
 
     

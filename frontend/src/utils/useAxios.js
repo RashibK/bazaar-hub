@@ -6,6 +6,13 @@ import dayjs from  'dayjs';
 
 const baseURL = 'http://127.0.0.1:8000'
 
+
+export const instance = axios.create({
+    baseURL: 'http://127.0.0.1:8000',
+    headers: {
+        'Content-Type': 'application/json', 
+      },
+});
 function useAxios() {
     // (jwtDecode(localStorage.getItem('authTokens'))
     const { authTokens, setAuthTokens, setUser } = useContext(AuthContext);
