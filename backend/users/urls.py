@@ -11,4 +11,5 @@ urlpatterns = [
     path('api/register/', views.register, name='user-register'),
     path('api/checkout/', views.checkout, name='user-checkout'),
     path('', views.home, name='home'),
+    path('profile/<int:id>/', views.get_profile, name='get-profile'),
 ]

@@ -10,6 +10,7 @@ import AddProduct from './pages/AddProduct';
 import FilteredPage from './components/FilteredPage';
 import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import UserProfile from './pages/UserProfile';
 
 
 function App() {
@@ -29,11 +30,13 @@ function App() {
       { !searchTerm ? <Route path='/' element={<HomePage />} exact/> : <Route path='/' element={<FilteredPage />}/>}
       
         <Route element={<PrivateRoutes />}>
+            <Route path='/products/add' element={<AddProduct />} />
+            <Route path='/users/profile' element={<UserProfile />} />
           
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
-        <Route path='/products/add' element={<AddProduct />} />
+        
       </Routes>
       </>
 

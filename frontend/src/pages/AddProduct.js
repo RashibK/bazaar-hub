@@ -1,7 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import useAxios from "../utils/useAxios";
+import { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
 function AddProduct() {
+
 
     const api = useAxios()
     const navigate = useNavigate();
@@ -31,6 +34,7 @@ function AddProduct() {
 
   return (
     <div>
+      
         <form onSubmit={onSubmit}>
             <label for='product_name'><input id='product_name' placeholder="Product Name" name="product_name" /></label><br></br>
             <label for='product_price'><input type="number" id='product_price'placeholder="Product Price" name="product Price"/></label><br></br>

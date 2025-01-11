@@ -30,6 +30,7 @@ export const AuthProvider = ({children}) => {
             setUser(jwtDecode(response.data.access))
             setAuthTokens(response.data) 
             navigate('/')   
+            
         }
 
     } catch (err) {

@@ -15,8 +15,9 @@ export const Navbar = () => {
         {!user && <Link to='/register'>Register</Link>}
         {!user && <Link to='/login'>Login</Link>}
         {user && <p style={{cursor: 'pointer'}} onClick={() => {userLogout()}}> Logout </p>}
-        <Link to='/products/add'>Add Product</Link>
-        
+
+        {user && <Link to='/products/add'>Add Product</Link>}
+        {user && <Link to='/users/profile'>Your Profile</Link> }
     </div>
   )
 }
