@@ -12,14 +12,13 @@ import { useContext } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import UserProfile from './pages/UserProfile';
 import Cart from './pages/Cart';
+import { QueryClient, QueryClientProvider  } from '@tanstack/react-query';
 
+const queryClient = new QueryClient();
 
 function App() {
 
-
-
   function AppContext() {
-
 
     const [ searchParams, setSearchParams ] = useSearchParams(); 
     const searchTerm = searchParams.get('search')
@@ -46,9 +45,12 @@ function App() {
   return (
     <div className="App">
      <Router>
+     <QueryClientProvider client={queryClient}>
       <AuthProvider>
+      
       <AppContext />
       </AuthProvider>
+      </QueryClientProvider>
      </Router>
     </div>
   );
