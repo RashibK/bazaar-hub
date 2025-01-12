@@ -1,24 +1,34 @@
 from django.shortcuts import render
 from products.models import Product
-from .models import Cart
+from .models import Cart, CartItem
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
-from .serializers import CartSerializer
+from .serializers import CartSerializer, CartItemSerialier
 from products.serializers import ProductSerializer
+
 
 # Adding product to a cart
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def post_product_to_cart(request, product_id):
     if request.method == 'POST':
+        #getting the product
         product = Product.objects.get(id= product_id)
+        #getting the user cart
         cart = Cart.objects.get(user_id = request.user.id)
 
-        cart.product.add(product)
+        # returns false in second variable if it was already created.
+        cartitem, created = CartItem.objects.get_or_create(product=product, cart=cart)
+        # if it was already created, then we just increase the item's quantity by 1
+        if not created:
+            cartitem.quantity += 1
+            cartitem.save()
 
+            return Response(status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_201_CREATED)
+
         
 
 # displaying all products of a cart
@@ -26,42 +36,55 @@ def post_product_to_cart(request, product_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_cart_products(request):
-    cart = Cart.objects.filter(user_id = request.user.id)
+    
+    #getting the specific cart of the logged in user
+    cart = Cart.objects.get(user=request.user)
 
-    serializer = CartSerializer(cart, many=True)
-    products = Product.objects.filter(id__in = serializer.data[0]['product'])
-    serializer = ProductSerializer(products, many=True)
+    #getting the cartitems of that specific cart
+    items = CartItem.objects.filter(cart=cart)
+
+    # serializer all the cart items of that cart to send to frontend 
+    serializer = CartItemSerialier(items, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+
 #removing a product from the cart
-
-# pure function that gets all the items from the cart
-
-def getitems(request):
-    cart = Cart.objects.filter(user_id = request.user.id)
-
-    serializer = CartSerializer(cart, many=True)
-    products = Product.objects.filter(id__in = serializer.data[0]['product'])
-    serializer = ProductSerializer(products, many=True)
-    return serializer
-
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def remove_product_from_cart(request, product_id):
     
-    cart = Cart.objects.get(user_id = request.user.id)
-    product = Product.objects.get(id=product_id)
+    cart = Cart.objects.get(user_id=request.user.id)
 
-    cart.product.remove(product)
+    items = CartItem.objects.filter(cart_id=cart.id)
 
-
-    cart = Cart.objects.filter(user_id = request.user.id)
+    serializer = CartItemSerialier(items, many=True)
     
-    serializer = CartSerializer(cart, many=True)
-    products = Product.objects.filter(id__in = serializer.data[0]['product'])
-    serializer = ProductSerializer(products, many=True)
-    
-    return Response(serializer.data, status=status.HTTP_204_NO_CONTENT)
+    for item in serializer.data:
+
+        if item['product_id'] == product_id:
+
+            if item['quantity'] > 1:
+                item = CartItem.objects.get(product_id=item['product_id'], cart_id=cart.id)
+                item.quantity = item.quantity - 1
+                item.save()
+
+                # getting the updated items with updated quantity
+                items = CartItem.objects.filter(cart_id=cart.id)
+
+                serializer  = CartItemSerialier(items, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            
+            else:
+                item = CartItem.objects.get(product_id=item['product_id'], cart_id=cart.id)
+                item.delete()
+                
+                # getting the updated items with updated quantity
+                items = CartItem.objects.filter(cart_id=cart.id)
+
+                serializer  = CartItemSerialier(items, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
