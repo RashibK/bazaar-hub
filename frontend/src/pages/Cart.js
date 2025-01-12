@@ -32,8 +32,8 @@ function Cart() {
 
     
     // removes an item from the cart
-    const onClick = async (id) => {
-      const response = await api.get(`/carts/product/remove/${id}`);
+    const onClick = async (id, action) => {
+      const response = await api.get(`/carts/product/${action}/${id}`);
       
       if (response.status === 200) {
         queryClient.invalidateQueries({ queryKey: ['get-cart-products'] })
@@ -46,7 +46,7 @@ function Cart() {
         return <><p id={index}>{product.name} at {((product.price) / 100).toFixed(2)}</p>
         <img src={`http://localhost:8000/${product.image}`} style={{width: 150, height: 150}}></img>
         <img src={`http://localhost:8000/media/ratings/rating-${product.rating * 10}.png`} ></img><p>{product.rating_number}</p>
-        <p>{product.category_name}</p><button onClick={() => {onClick(product.product_id)}}>Remove From Cart</button></>
+        <p>{product.category_name}</p><p>Quantity: {product.quantity}</p><button onClick={() => onClick(product.product_id, 'increase')}>Increase</button><button onClick={() => onClick(product.product_id, 'decrease')}>Decrease</button><button onClick={() => {onClick(product.product_id, 'remove')}}>Remove From Cart</button></>
       })}
     </div>
    

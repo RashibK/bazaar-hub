@@ -8,7 +8,6 @@ from rest_framework.permissions import IsAuthenticated
 from .serializers import CartSerializer, CartItemSerialier
 from products.serializers import ProductSerializer
 
-
 # Adding product to a cart
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -29,10 +28,7 @@ def post_product_to_cart(request, product_id):
             return Response(status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_201_CREATED)
 
-        
-
 # displaying all products of a cart
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_cart_products(request):
@@ -47,13 +43,36 @@ def get_cart_products(request):
     serializer = CartItemSerialier(items, many = True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
-
-
 #removing a product from the cart
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def remove_product_from_cart(request, product_id):
+    
+    cart = Cart.objects.get(user_id=request.user.id)
+
+    items = CartItem.objects.filter(cart_id=cart.id)
+
+    serializer = CartItemSerialier(items, many=True)
+    
+    for item in serializer.data:
+
+        if item['product_id'] == product_id:
+
+                item = CartItem.objects.get(product_id=item['product_id'], cart_id=cart.id)
+                item.delete()
+                
+                # getting the updated items with updated quantity
+                items = CartItem.objects.filter(cart_id=cart.id)
+
+                serializer  = CartItemSerialier(items, many=True)
+                return Response(serializer.data, status=status.HTTP_200_OK)
+
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+# descreasing the quantity of a product
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def decrease_product_quantity_from_cart(request, product_id):
     
     cart = Cart.objects.get(user_id=request.user.id)
 
@@ -88,3 +107,28 @@ def remove_product_from_cart(request, product_id):
 
     return Response(status=status.HTTP_204_NO_CONTENT)
 
+#increasing the quantity of a product
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def increase_product_quantity_from_cart(request, product_id):
+    if request.method == 'GET':
+        #getting the product
+        product = Product.objects.get(id= product_id)
+        #getting the user cart
+        cart = Cart.objects.get(user_id = request.user.id)
+
+        # returns false in second variable if it was already created.
+        cartitem, created = CartItem.objects.get_or_create(product=product, cart=cart)
+        # if it was already created, then we just increase the item's quantity by 1
+        if not created:
+            cartitem.quantity += 1
+            cartitem.save()
+
+            # getting the updated items with updated quantity
+            items = CartItem.objects.filter(cart_id=cart.id)
+
+            serializer  = CartItemSerialier(items, many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_201_CREATED)
+
+        
