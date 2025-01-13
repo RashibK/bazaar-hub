@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react"
 import { AuthContext } from "../context/authContext"
 import useAxios from "../utils/useAxios";
 import { useQuery, QueryClient, useQueryClient } from '@tanstack/react-query'
-
+import { Link } from "react-router-dom";
 
 
 function Cart() {
@@ -48,6 +48,8 @@ function Cart() {
         <img src={`http://localhost:8000/media/ratings/rating-${product.rating * 10}.png`} ></img><p>{product.rating_number}</p>
         <p>{product.category_name}</p><p>Quantity: {product.quantity}</p><button onClick={() => onClick(product.product_id, 'increase')}>Increase</button><button onClick={() => onClick(product.product_id, 'decrease')}>Decrease</button><button onClick={() => {onClick(product.product_id, 'remove')}}>Remove From Cart</button></>
       })}
+
+      {cartProducts && <Link to='/users/cart/checkout'> Checkout </Link>}
     </div>
    
   )

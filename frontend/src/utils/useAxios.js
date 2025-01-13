@@ -17,8 +17,6 @@ function useAxios() {
     // (jwtDecode(localStorage.getItem('authTokens'))
     const { authTokens, setAuthTokens, setUser } = useContext(AuthContext);
 
-
-
     const axiosInstance = axios.create({
         baseURL,
         headers: {

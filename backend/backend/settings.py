@@ -198,3 +198,6 @@ MEDIA_URL = '/media/'
 # Specify the directory where media files are stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STRIPE_PUBLISHABLE_KEY = config('STRIPE_PUBLISHABLE_KEY')
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY')
+YOUR_DOMAIN = config('YOUR_DOMAIN')   

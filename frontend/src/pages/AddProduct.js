@@ -3,8 +3,9 @@ import useAxios from "../utils/useAxios";
 import { useContext } from "react";
 import { AuthContext } from "../context/authContext";
 
-function AddProduct() {
 
+
+function AddProduct() {
 
     const api = useAxios()
     const navigate = useNavigate();
