@@ -1,4 +1,3 @@
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Navbar } from './components/Navbar';
 import Register from './pages/Register';
@@ -14,6 +13,7 @@ import UserProfile from './pages/UserProfile';
 import Cart from './pages/Cart';
 import { QueryClient, QueryClientProvider  } from '@tanstack/react-query';
 import CheckOut from './pages/CheckOut';
+import './App.css';
 
 const queryClient = new QueryClient();
 
@@ -26,6 +26,7 @@ function App() {
 
 
     return <>
+
       <Navbar />
       <Routes>
       { !searchTerm ? <Route path='/' element={<HomePage />} exact/> : <Route path='/' element={<FilteredPage />}/>}
