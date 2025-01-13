@@ -46,17 +46,34 @@ function HomePage() {
     
   }
     return (
-    <div><p>Hey this is the homepage for ecommerce site backend</p>
-    <p>Below are all the products in db</p>
-    
-      {filteredData && filteredData.map((product, index) => {
-        return <><p id={index}>{product.name} at {((product.price) / 100).toFixed(2)}</p>
-        <img src={`http://localhost:8000/${product.image}`} style={{width: 150, height: 150}}></img>
-        <img src={`http://localhost:8000/media/ratings/rating-${product.rating * 10}.png`} ></img><p>{product.rating_number}</p>
-        <p>{product.category_name}</p><button onClick={() => onClick(product.id)}>Add to Cart</button></>
+    <div className="max-w-7xl mx-auto mt-2.5">
+      <div className="grid grid-cols-5 gap-2.5 gap-y-4">
+        {filteredData && filteredData.map((product, index) => {
+        return <div className=" flex flex-col justify-between">
+          
+          <div className="flex justify-center items-center"> <img src={`http://localhost:8000/${product.image}`} style={{width: 150, height: 150}}></img></div>
+          <div className="flex gap-1.5 flex-col justify-between">
+            <div className="">
+            <p id={index} className="font-bold">{product.name}</p>
+          <div className="flex justify-center items-center gap-1">
+          <img className='w-16 ' src={`http://localhost:8000/media/ratings/rating-${product.rating * 10}.png`}></img>
+          <p className="text-sm pt-0.5">{product.rating_number}</p>
+          </div>
+          <p className="font-semibold">${((product.price) / 100).toFixed(2)}</p>
+              </div>
+          <button className='bg-yellow-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-9/12 m-auto' onClick={() => onClick(product.id)}>Add to Cart</button>
+          </div>
+          
+       
+        
+        </div>
       })}
+      </div>
     </div>
   )
 }
 
 export default HomePage
+
+
+{/* <p>{product.category_name}</p> */}

@@ -3,7 +3,7 @@ import useAxios from "../utils/useAxios"
 import { AuthContext } from "../context/authContext";
 
 function UserProfile() {
-  const { user } = useContext(AuthContext);
+  const { user, userLogout } = useContext(AuthContext);
   const [userProfile, setUserProfile] = useState();
     const api = useAxios();
 
@@ -25,6 +25,8 @@ function UserProfile() {
      {userProfile ? <>
       <p>{userProfile.bio}</p>
       <img src={`http://localhost:8000${userProfile.image}`}></img>
+      <li>{user && <p style={{cursor: 'pointer'}} onClick={() => {userLogout()}}> Logout </p>}</li>
+
      </> : <p>Loading...</p>}
   </>)
 }

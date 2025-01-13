@@ -11,8 +11,8 @@ export const Navbar = () => {
 
 
   return <>
-  {user && <div className="sticky bg-orange-700 z-20 top-0 h-20 ">
-  <nav className="h-full w-full">
+  {user && <div className="sticky bg-white-700 z-20 top-0 h-20 ">
+  <nav className="h-full bg-white w-full">
   <ul className="flex h-full w-full items-center justify-center gap-x-11">
   <li><Link to='/'><img src={mainLogo} width={48} height={48}></img></Link></li>
   <li><SearchBar /></li>
