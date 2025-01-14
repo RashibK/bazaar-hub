@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.views import TokenObtainPairView
-from .serializers import MyTokenObtainPairSerializer, UserSerializer, ProfileSerializer
+from .serializers import MyTokenObtainPairSerializer, UserSerializer, ProfileSerializer, UserUpdateSerializer
 from .models import User, Profile
 
 # for registering new users
@@ -54,6 +54,28 @@ def get_profile(request, id):
     if request.method == 'GET':
         profile = Profile.objects.get(user_id = id)
         serializer = ProfileSerializer(profile)
+
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_profile(request, id):
+    if request.method == 'PUT':
+            try:
+                user = User.objects.get(id=id)
+            except User.DoesNotExist:
+                return Response({"data": "user not found"}, status=status.HTTP_404_NOT_FOUND)
+            
+            # passing my id to userupadteserialier through context
+            serializer = UserUpdateSerializer(user, data=request.data, context  = {"context": id})
+            if serializer.is_valid():
+                serializer.save()
+                return Response(status=status.HTTP_202_ACCEPTED)
+            
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

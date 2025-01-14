@@ -12,4 +12,5 @@ urlpatterns = [
     path('api/checkout/', views.checkout, name='user-checkout'),
     path('', views.home, name='home'),
     path('profile/<int:id>/', views.get_profile, name='get-profile'),
+    path('update/<int:id>', views.update_profile, name='update-profile'),
 ]
