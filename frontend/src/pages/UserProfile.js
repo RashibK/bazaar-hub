@@ -1,6 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import useAxios from "../utils/useAxios"
 import { AuthContext } from "../context/authContext";
+import TinyUserIcon from "../assets/TinyUserIcon";
+import GlobeIcon from '../assets/GlobeIcon';
+import MessageIcon from '../assets/MessageIcon';
+import LanguageIcon from '../assets/LanguageIcon';
 
 function UserProfile() {
   const { user, userLogout } = useContext(AuthContext);
@@ -13,6 +17,8 @@ function UserProfile() {
   const [oldpassword, setOldpassword] = useState('');
   const [newpassword, setNewpassword] = useState('');
   const [newpassword2, setNewpassword2] = useState('');
+
+  
 
     const api = useAxios();
 
@@ -72,31 +78,67 @@ function UserProfile() {
     
   return (<>
      {userProfile ? 
-     <div className="bg-stone-300  max-w-7xl m-auto flex gap-4">
-        <div>
-          <h1>Your Profile</h1>
-       
-        <img className='rounded-full' src={`http://localhost:8000${userProfile.image}`} width={150} height={150}></img>
+   <div className="max-w-screen-lg  my-0 mx-auto ">
+    <div className="mx-2  p-6">
+    <div className="flex flex-col mx-px gap-2">
+      <div className="flex justify-between p-2">
+        <p className="font-bold text-lg">StoreStream Account</p>
+        <button className="font-bold bg-red-600 text-white min-h-7 rounded-md w-24 hover:bg-red-700" onClick={() => {userLogout()}}>Sign Out</button>
+      </div>
+      <hr className="border-black border-none h-0.5 bg-zinc-300 opacity-50"></hr>
+      <div className="flex gap-x-32 mt-8">
+        <div className="flex flex-col gap-y-5">
+          <div className="flex flex-col gap-y-2.5 items-start">
+            <img className="rounded-full w-36 h-36" src={`http://localhost:8000${userProfile.image}`}></img>
+              <div>
+              <p className="font-semibold text-lg">{user.full_name}</p>
+              <p className="text-xs text-neutral-500">{user.email}</p>
+              </div>
+          </div>
+        <div className="flex flex-col items-start gap-y-2">
+        <p className="font-semibold text-orange-400 cursor-pointer">Personal Information</p>
+          <p className="font-medium text-neutral-500 cursor-pointer">Billing & Payments</p>
+          <p className="font-medium text-neutral-500 cursor-pointer">Order History</p>
         </div>
-        <div>
-          <h1>Your Information</h1>
-          <form onSubmit={onSubmit}>
-          <p>Name: <input type="text" value={fullname} onChange={(event) => {setFullname(event.target.value)}} name="full_name"></input></p>
-          <p>Email: <input type="text" value={email} onChange={(event) => {setEmail(event.target.value)}} name="email"></input></p>
-          <p>Username: <input type="text" value={username} onChange={(event) => {setUsername(event.target.value)}} name="username"></input></p>
-          <p>Current Password: <input type="text" onChange={(event) => {setOldpassword(event.target.value)}} name="old_password"></input></p>
-          <p>New Password: <input type="text" onChange={(event) => {setNewpassword(event.target.value)}} name="new_password"></input></p>
-          <p>Retype New Password: <input type="text" onChange={(event) => {setNewpassword2(event.target.value)}} name="new_password2"></input></p>
-          <button>Update</button>
-          </form>
         </div>
-     </div>
+        <div className="flex items-start flex-col gap-y-8">
+          <div>
+            <p className="font-bold text-4xl ">Personal Information</p>
+          </div>
+          <div className="grid grid-cols-2 gap-2.5 ">
+            <div className="border-2 flex p-5  justify-between items-center rounded-lg gap-x-24 py-8">
+              <div className="flex flex-col items-start"><p className="font-semibold text-base">Name</p>
+              <p className="text-xs text-neutral-500">{user.full_name}</p></div>
+              <div>
+                <TinyUserIcon className=''/> </div>
+            </div>
+            <div className="border-2 flex p-5  justify-between items-center rounded-lg gap-x-24 py-8">
+              <div className="flex flex-col items-start"><p className="font-semibold text-base">Country/Region</p>
+              <p className="text-xs text-neutral-500">US</p></div>
+              <div>
+                <GlobeIcon /></div>
+            </div>
+            <div className="border-2 flex p-5  justify-between items-center rounded-lg gap-x-24 py-8">
+              <div className="flex flex-col items-start"><p className="font-semibold text-base">Contact</p>
+              <p className="text-xs text-neutral-500">{user.email}</p></div>
+              <div>
+                <MessageIcon /></div>
+            </div>
+            <div className="border-2 flex p-5  justify-between items-center rounded-lg gap-x-24 py-8">
+              <div className="flex flex-col items-start"><p className="font-semibold text-base">Language</p>
+              <p className="text-xs text-neutral-500" >English(US)</p></div>
+              <div>
+                <LanguageIcon /></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+   </div>
      : <p>Loading...</p>}
   </>)
 }
 
 export default UserProfile
 
-{/* <p>{userProfile.bio}</p> */}
-{/* <img src={`http://localhost:8000${userProfile.image}`}></img>
-<li>{user && <p style={{cursor: 'pointer'}} onClick={() => {userLogout()}}> Logout </p>}</li> */}

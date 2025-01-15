@@ -25,7 +25,7 @@ const Login = () => {
   <form onSubmit={onSubmit} className="flex flex-col gap-y-3">
       <label for='email'><input type='email' className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='email'placeholder="Email" name="email" autoFocus/></label>
       <label for='password'><input type="password" className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='password' placeholder="Password" name="password" /></label>  
-      <button className="bg-blue-700 w-6/12 my-0 mx-auto h-10 font-bold rounded-lg hover:bg-blue-600 mt-6 text-white"> LogIn </button>
+      <button className="bg-blue-700 w-6/12 my-0 mx-auto h-10 font-bold rounded-lg hover:bg-blue-600 mt-6 text-white"> Log In </button>
   </form>
   <p className="text-sm mb-1 mt-1.5">New here?<a href="/register" className="text-blue-700 hover:text-blue-600 mt-6 font-semibold"> Sign Up</a></p>
   </div>
