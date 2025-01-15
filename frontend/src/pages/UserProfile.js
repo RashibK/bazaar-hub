@@ -6,21 +6,12 @@ import GlobeIcon from '../assets/GlobeIcon';
 import MessageIcon from '../assets/MessageIcon';
 import LanguageIcon from '../assets/LanguageIcon';
 import { Link } from "react-router-dom";
+import StarIcon from '../assets/StarIcon';
 
 function UserProfile() {
   const { user, userLogout } = useContext(AuthContext);
   const [userProfile, setUserProfile] = useState();
-
-  const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
-  const [fullname, setFullname] = useState(user.full_name);
   
-  const [oldpassword, setOldpassword] = useState('');
-  const [newpassword, setNewpassword] = useState('');
-  const [newpassword2, setNewpassword2] = useState('');
-
-  
-
     const api = useAxios();
 
     useEffect(() => {
@@ -36,6 +27,7 @@ function UserProfile() {
       }
     }
 
+
     
   return (<>
      {userProfile ? 
@@ -45,6 +37,7 @@ function UserProfile() {
       <div className="flex justify-between p-2">
         <p className="font-bold text-lg">StoreStream Account</p>
         <div className="flex gap-x-4 h-8">
+        <Link to='/products/add' className="font-bold bg-yellow-600 text-white min-h-7 rounded-md w-32 hover:bg-yellow-500 flex justify-center items-center">Add Product</Link>
         <Link to='/users/update/password' className="font-bold bg-blue-700 text-white min-h-7 rounded-md w-32 hover:bg-blue-600 flex justify-center items-center">Update Profile</Link>
         <button className="font-bold bg-red-600 text-white min-h-7 rounded-md w-24 hover:bg-red-700" onClick={() => {userLogout()}}>Sign Out</button>
         </div>
@@ -55,7 +48,11 @@ function UserProfile() {
           <div className="flex flex-col gap-y-2.5 items-start">
             <img className="rounded-full w-36 h-36" src={`http://localhost:8000${userProfile.image}`}></img>
               <div>
-              <p className="font-semibold text-lg">{user.full_name}</p>
+                <div className="flex items-center gap-x-1">
+                <p className="font-semibold text-lg">{user.full_name}</p>
+                <StarIcon />
+                </div>
+              
               <p className="text-xs text-neutral-500">{user.email}</p>
               </div>
           </div>
