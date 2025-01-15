@@ -5,6 +5,7 @@ import TinyUserIcon from "../assets/TinyUserIcon";
 import GlobeIcon from '../assets/GlobeIcon';
 import MessageIcon from '../assets/MessageIcon';
 import LanguageIcon from '../assets/LanguageIcon';
+import { Link } from "react-router-dom";
 
 function UserProfile() {
   const { user, userLogout } = useContext(AuthContext);
@@ -35,46 +36,6 @@ function UserProfile() {
       }
     }
 
-
-    // this function is responsible for sending the new user's profile data and updating it in the backend.
-
-    function onSubmit (event) {
-      event.preventDefault();
-
-      const full_name = event.target.full_name.value;
-      const email = event.target.email.value;
-      const username = event.target.username.value;
-      const old_password = event.target.old_password.value;
-      const new_password = event.target.new_password.value;
-      const new_password2 = event.target.new_password2.value;
-
-
-      async function updateData() {
-        try {
-          const response = await api.put(`/users/update/${user.user_id}`, {
-            full_name,
-            email,
-            username,
-            old_password,
-            new_password,
-            new_password2
-          })
-          if (response.status === 202) {
-            alert('Success! Profile Updated')
-            return getProfile();
-          
-          }
-        }
-
-        catch(err) {
-          alert(err.response.data.password)
-        }
-      }
-
-      updateData();
-
-    }
-
     
   return (<>
      {userProfile ? 
@@ -83,7 +44,10 @@ function UserProfile() {
     <div className="flex flex-col mx-px gap-2">
       <div className="flex justify-between p-2">
         <p className="font-bold text-lg">StoreStream Account</p>
+        <div className="flex gap-x-4 h-8">
+        <Link to='/users/update/password' className="font-bold bg-blue-700 text-white min-h-7 rounded-md w-32 hover:bg-blue-600 flex justify-center items-center">Update Profile</Link>
         <button className="font-bold bg-red-600 text-white min-h-7 rounded-md w-24 hover:bg-red-700" onClick={() => {userLogout()}}>Sign Out</button>
+        </div>
       </div>
       <hr className="border-black border-none h-0.5 bg-zinc-300 opacity-50"></hr>
       <div className="flex gap-x-32 mt-8">

@@ -14,6 +14,7 @@ import Cart from './pages/Cart';
 import { QueryClient, QueryClientProvider  } from '@tanstack/react-query';
 import CheckOut from './pages/CheckOut';
 import './App.css';
+import UpdatePassword from './pages/UpdatePassword';
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
             <Route path='/users/profile' element={<UserProfile />} />
             <Route path='/users/cart' element={<Cart />} />
             <Route path='/users/cart/checkout' element={<CheckOut />} />
+            <Route path='/users/update/password' element={<UpdatePassword />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />

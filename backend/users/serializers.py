@@ -58,9 +58,9 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 
 class UserUpdateSerializer(serializers.ModelSerializer):
-    old_password = serializers.CharField(required=True)
-    new_password = serializers.CharField(required=True)
-    new_password2 = serializers.CharField(required=True)
+    old_password = serializers.CharField(required=False)
+    new_password = serializers.CharField(required=False)
+    new_password2 = serializers.CharField(required=False)
 
     class Meta:
         model = User
@@ -70,28 +70,34 @@ class UserUpdateSerializer(serializers.ModelSerializer):
     def validate(self, attrs):
 
         user =  self.instance
+        if (attrs.get('new_password') and attrs.get('old_password') and attrs.get('new_password2')):
+            if user.check_password(attrs['old_password']):
 
-        if user.check_password(attrs['old_password']):
-
-            if attrs['new_password'] == attrs['new_password2']:
-                if attrs['new_password'] != attrs['old_password']:
-                    return attrs
+                if attrs['new_password'] == attrs['new_password2']:
+                    if attrs['new_password'] != attrs['old_password']:
+                        return attrs
+                    raise serializers.ValidationError({
+                    "password": "old and new passwords are the same"
+                    })
                 raise serializers.ValidationError({
-                "password": "old and new passwords are the same"
+                    "password": "new password fields doesn't match"
                 })
             raise serializers.ValidationError({
-                "password": "new password fields doesn't match"
+                "password": "old password isn't correct"
             })
-        raise serializers.ValidationError({
-            "password": "old password isn't correct"
-        })
+        else:
+            return attrs
     
     def update(self, instance, validated_data):
         
         instance.email = validated_data['email']
         instance.username = validated_data['username']
         instance.full_name = validated_data['full_name']
-        instance.set_password(validated_data['new_password'])
-        instance.save()
+        
+        if (validated_data.get('new_password') and validated_data.get('old_password') and validated_data.get('new_password2')):
 
+            instance.set_password(validated_data['new_password'])
+            
+        instance.save()
+        
         return instance
