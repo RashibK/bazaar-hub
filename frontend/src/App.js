@@ -14,7 +14,7 @@ import Cart from './pages/Cart';
 import { QueryClient, QueryClientProvider  } from '@tanstack/react-query';
 import CheckOut from './pages/CheckOut';
 import './App.css';
-import UpdatePassword from './pages/UpdatePassword';
+import UpdatePassword from './pages/UpdateProfile';
 
 const queryClient = new QueryClient();
 

@@ -80,8 +80,8 @@ function UpdatePassword() {
 
   
   return (<div className="max-w-7xl m-auto  px-8">
-    <div className="border border-zinc-200 w-4/12 mx-auto flex flex-col justify-center items-center gap-y-6 rounded-lg">
-    <div className="w-6/12 ">
+      <div className="border border-zinc-200 w-4/12 mx-auto flex flex-col justify-center items-center gap-y-6 rounded-lg max-lg:w-5/12 max-md:w-3/5 max-[600px]:w-10/12 max-[360px]:w-full">
+      <div className="w-6/12 ">
     <p className="text-2xl font-bold mt-4 text-slate-950" >Update Profile</p>
     </div>
       <div className="w-full">

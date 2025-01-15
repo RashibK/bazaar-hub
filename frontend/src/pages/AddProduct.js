@@ -35,14 +35,14 @@ function AddProduct() {
 
   return (<>
   <div className="max-w-7xl m-auto  px-8">
-    <div className="border border-zinc-200 w-4/12 mx-auto flex flex-col justify-center items-center gap-y-6 rounded-lg">
-    <div className="w-6/12 ">
+  <div className="border border-zinc-200 w-4/12 mx-auto flex flex-col justify-center items-center gap-y-6 rounded-lg max-lg:w-5/12 max-md:w-3/5 max-[600px]:w-10/12 max-[360px]:w-full">
+  <div className="w-6/12 ">
     <p className="text-2xl font-bold mt-4 text-slate-950" >Add Product</p>
     </div>
       <div className="w-full">
       <form  className="flex flex-col gap-y-3" onSubmit={onSubmit}>
       <label for='product_name' className="border-transparent"><input type='text' className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='product_name' placeholder='Product Name' name="product_name" autoFocus/></label>
-      <label for='product_price'><input type='number' className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' placeholder='Product Price(in cents)' id='product_price' name="product_price"/></label>
+      <label for='product_price'><input type='number' className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' placeholder='Product Price(cents)' id='product_price' name="product_price"/></label>
       <label for='product_image'><input type='file' accept="image/jpeg,image/png,image/gif" className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='product_image' placeholder="Product Image" name="product_image" /></label>
     
 
