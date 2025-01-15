@@ -46,7 +46,7 @@ function Cart() {
     }
 
     return (
-    <div className="flex ">
+    <div className="flex 2xl:flex-row flex-col  ">
       <div className=" m-4">
       <h2 class="text-xl font-semibold text-black-900 sm:text-2xl">Shopping Cart</h2>
         <div>

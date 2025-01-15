@@ -13,7 +13,7 @@ export const Navbar = () => {
   return <>
   {user && <div className="sticky bg-white-700 z-20 top-0 h-20 ">
   <nav className="h-full bg-white w-full">
-  <ul className="flex h-full w-full items-center justify-center gap-x-11">
+  <ul className="flex h-full w-full items-center justify-center min-[320px]:gap-x-4  sm:gap-x-8 px-0.5">
   <li><Link to='/'><img src={mainLogo} width={48} height={48}></img></Link></li>
   <li><SearchBar /></li>
   <li><Link to='/users/profile'><UserIcon className='cursor-pointer' /></Link></li>

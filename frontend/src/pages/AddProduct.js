@@ -43,7 +43,7 @@ function AddProduct() {
       <form  className="flex flex-col gap-y-3" onSubmit={onSubmit}>
       <label for='product_name' className="border-transparent"><input type='text' className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='product_name' placeholder='Product Name' name="product_name" autoFocus/></label>
       <label for='product_price'><input type='number' className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' placeholder='Product Price(in cents)' id='product_price' name="product_price"/></label>
-      <label for='product_image'><input type='file' accept="image/jpeg,image/png,image/gif" className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='product_image' placeholder="Product Image" name="product_image"id='product_image' placeholder="Product Image" name="product_image"/></label>
+      <label for='product_image'><input type='file' accept="image/jpeg,image/png,image/gif" className='w-2/3 h-8 rounded border border-zinc-200 p-px ps-2.5 inline-block relative text-slate-500' id='product_image' placeholder="Product Image" name="product_image" /></label>
     
 
     <label for='category' >Choose a Category:</label> 

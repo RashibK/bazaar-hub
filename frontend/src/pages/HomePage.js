@@ -47,7 +47,7 @@ function HomePage() {
   }
     return (
     <div className="max-w-7xl mx-auto mt-2.5">
-      <div className="grid grid-cols-5 gap-2.5 gap-y-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-y-4 ">
         {filteredData && filteredData.map((product, index) => {
         return <div className=" flex flex-col justify-between">
           
@@ -63,9 +63,6 @@ function HomePage() {
               </div>
           <button className='bg-yellow-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full w-9/12 m-auto' onClick={() => onClick(product.id)}>Add to Cart</button>
           </div>
-          
-       
-        
         </div>
       })}
       </div>
