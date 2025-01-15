@@ -5,9 +5,10 @@ import SearchIcon from "../assets/SearchIcon";
 
 function SearchBar() {
     
-    const {search, setSearch} = useContext(AuthContext);
+    const {search, setSearch, user} = useContext(AuthContext);
 
     const onSubmit = (event) => {
+      
       // event.preventDefault();
       setSearch(event.target.search.value)
       console.log(event.target.search.value)

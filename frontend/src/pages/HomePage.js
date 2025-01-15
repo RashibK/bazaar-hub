@@ -3,12 +3,17 @@ import useAxios from "../utils/useAxios"
 import axios from "axios";
 import { instance } from "../utils/instanceAxios";
 import { AuthContext } from "../context/authContext";
+import { Navigate, useNavigate } from "react-router-dom";
 
 
 function HomePage() {
 
   const [allproducts, setAllproducts] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+
+  const { user } = useContext(AuthContext);
+
+  const navigate = useNavigate();
 
   const api = useAxios();
 
@@ -38,12 +43,18 @@ function HomePage() {
 
   // # for adding a product to user's cart
   const onClick = (id) => {
-    const response = api.post(`/carts/post/${id}`)
-    
-    if ( response.method == 201) {
-      alert('Added to cart')
+    if (!user) {
+      navigate('/login');
     }
+    else {
+      const response = api.post(`/carts/post/${id}`)
     
+      if ( response.method == 201) {
+        alert('Added to cart')
+      }
+      
+    }
+
   }
     return (
     <div className="max-w-7xl mx-auto mt-2.5">
@@ -72,5 +83,3 @@ function HomePage() {
 
 export default HomePage
 
-
-{/* <p>{product.category_name}</p> */}
