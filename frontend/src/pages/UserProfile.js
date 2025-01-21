@@ -35,7 +35,7 @@ function UserProfile() {
     <div className="mx-2  p-6">
     <div className="flex flex-col mx-px gap-2">
       <div className="flex justify-between p-2 sm:flex-row  flex-col ">
-        <p className="font-bold text-lg">StoreStream Account</p>
+        <p className="font-bold text-lg">Bazaar Hub Account</p>
         <div className="flex gap-x-4 h-12 sm:h-8">
         <Link to='/products/add' className="font-bold bg-yellow-600 text-white min-h-7 rounded-md w-32 hover:bg-yellow-500 flex justify-center items-center">Add Product</Link>
         <Link to='/users/update/password' className="font-bold bg-blue-700 text-white min-h-7 rounded-md w-32 hover:bg-blue-600 flex justify-center items-center">Update Profile</Link>

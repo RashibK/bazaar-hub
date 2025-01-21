@@ -77,7 +77,6 @@ function UpdatePassword() {
       alert(err.response.data.password)
     }
   }
-
   
   return (<div className="max-w-7xl m-auto  px-8">
       <div className="border border-zinc-200 w-4/12 mx-auto flex flex-col justify-center items-center gap-y-6 rounded-lg max-lg:w-5/12 max-md:w-3/5 max-[600px]:w-10/12 max-[360px]:w-full">
