@@ -17,7 +17,4 @@ Bazaar Hub is a backend API for a simple e-commerce platform. It provides functi
 ### Add Product Page
 ![Screenshot from 2025-01-21 17-17-27](https://github.com/user-attachments/assets/c3830539-26e9-41c0-b322-496aa3181350)
 
-## Installation
-1.Clone the repository
-`git clone https://github.com/RashibK/simple-e-commerce-backend.git`
-2. 
+
